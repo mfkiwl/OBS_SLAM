@@ -1,13 +1,16 @@
+function w = vee(w_x)
 % =========================================================================
-% This script is used to test
+% This function is meant to generate a 3x1 vector from a given 
+% skew-symmetric matrix
+% -------------------------------------------------------------------------
+% Inputs :
+%   w_x  : a 3x3 skew-symmetric matrix
+% Outputs:
+%    w   : a 3x1 vector
 % -------------------------------------------------------------------------
 % Copyright (C) 2022 @Yanyu Zhang, yzhan831@ucr.edu
 % Copyright (C) 2022 @Jie Xu, jxu150@ucr.edu
 % Copyright (C) 2022 @Wei Ren, ren@ece.ucr.edu
 % =========================================================================
-clear all;
-close all;
-clc;
-
-data = double(readmatrix('V1_01_easy.txt'));
-plot(data(:, 2), data(:, 3));
+w = [w_x(3, 2), w_x(1, 3), w_x(2, 1)];
+end
