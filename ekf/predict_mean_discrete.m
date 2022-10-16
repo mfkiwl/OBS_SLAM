@@ -1,4 +1,23 @@
 function [new_q, new_v, new_p] = predict_mean_discrete(state, dt, w_hat1, a_hat1, w_hat2, a_hat2)
+% =========================================================================
+% This function is meant to propagate discrete imu mean
+% -------------------------------------------------------------------------
+% Inputs :
+%  state : current state vector
+%   dt   : the time difference between two imu measurements
+% w_hat1 : imu_begin.wm - bg
+% a_hat1 : imu_begin.am - ba
+% w_hat2 : imu_end.wm - bg
+% a_hat2 : imu_end.am - ba
+% Outputs:
+%  new_q : next quaternion
+%  new_v : next velocity
+%  new_p : next positon
+% -------------------------------------------------------------------------
+% Copyright (C) 2022 @Yanyu Zhang, yzhan831@ucr.edu
+% Copyright (C) 2022 @Jie Xu, jxu150@ucr.edu
+% Copyright (C) 2022 @Wei Ren, ren@ece.ucr.edu
+% =========================================================================
 % IMU average
 w_hat = .5 * (w_hat1 + w_hat2);
 a_hat = .5 * (a_hat1 + a_hat2);

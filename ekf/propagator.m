@@ -1,6 +1,6 @@
 function [state_n, cov_n] = propagator(state_c, cov_c, imu_begin, imu_end, sigma)
 % =========================================================================
-% This function is meant to propagate IMU to a given timestamp
+% This function is meant to propagate IMU from begin to end
 % -------------------------------------------------------------------------
 % Inputs :
 % state_c: current state vector
