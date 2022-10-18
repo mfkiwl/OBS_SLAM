@@ -3,10 +3,10 @@ function pt_out = undistort(uv_dist, cam)
 % This function is meant to undistort uv point based on the cameara model
 % -------------------------------------------------------------------------
 % Inputs :
-% uv_dist: distort uv
+% uv_dist: distort uv 1 x 2 matrix 
 %   cam  : camera parameters
 % Outputs:
-% pt_out : undistorted point
+% pt_out : undistorted point 1 x 2 matrix 
 % -------------------------------------------------------------------------
 % Copyright (C) 2022 @Yanyu Zhang, yzhan831@ucr.edu
 % Copyright (C) 2022 @Jie Xu, jxu150@ucr.edu

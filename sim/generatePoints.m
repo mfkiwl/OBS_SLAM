@@ -1,4 +1,4 @@
-function featmap = generatePoints(featmap_c, p_IinG, R_GtoI, nfeats, cam, gen)
+function featmap = generatePoints(featmap_c, p_IinG, R_GtoI, nfeats)
 % =========================================================================
 % This function is meant to generate 3D points
 % -------------------------------------------------------------------------
@@ -7,8 +7,6 @@ function featmap = generatePoints(featmap_c, p_IinG, R_GtoI, nfeats, cam, gen)
 %  p_IinG: 3 x 1 position of IMU in global frame
 %  R_GtoI: 3 x 3 rotational matrix of global frame in IMU
 %  nfeats: number of features in each frame
-%   cam  : camera parameters
-%   gen  : simulation parameters
 % Outputs:
 % featmap: a list of new feature in 3D
 % -------------------------------------------------------------------------
@@ -16,6 +14,9 @@ function featmap = generatePoints(featmap_c, p_IinG, R_GtoI, nfeats, cam, gen)
 % Copyright (C) 2022 @Jie Xu, jxu150@ucr.edu
 % Copyright (C) 2022 @Wei Ren, ren@ece.ucr.edu
 % =========================================================================
+cam = cam_config();
+sim = sim_config();
+
 R_ItoC = cam.T_CtoI(1:3,1:3)';
 p_IinC = -R_ItoC * cam.T_CtoI(1:3,4);
 w = cam.resolution(1);
@@ -31,16 +32,16 @@ for i = 1:1:nfeats
     v_dist = randi([1 h],1);
 
     uv_norm = undistort([u_dist, v_dist]);
-    depth = randi([gen.min_depth gen.max_depth],1);
+    depth = randi([sim.min_depth sim.max_depth],1);
 
     bearing = [uv_norm(1), uv_norm(2), 1];
     p_FinC = depth * bearing;
 
     p_FinI = R_ItoC.' * (p_FinC - p_IinC);
     p_FinG = R_GtoI.' * p_FinI + p_IinG;
+    
+    featmap(end + 1) = struct('id_map', id_map, 'p_FinG', p_FinG);
 
-    featmap(id_map).id_map = id_map;
-    featmap(id_map).p_FinG = p_FinG;
     id_map = id_map + 1;
 end
 
