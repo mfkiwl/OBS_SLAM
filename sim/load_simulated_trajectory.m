@@ -1,4 +1,4 @@
-function traj_data = load_simulated_trajectory(path)
+function [data_T, data] = load_simulated_trajectory(path)
 % =========================================================================
 % This function is to load the trajectory data for simulation
 % -------------------------------------------------------------------------
@@ -11,7 +11,7 @@ function traj_data = load_simulated_trajectory(path)
 % Copyright (C) 2022 @Jie Xu, jxu150@ucr.edu
 % Copyright (C) 2022 @Wei Ren, ren@ece.ucr.edu
 % =========================================================================
-traj_data = [];
+data_T = [];
 data = double(readmatrix(path));
 for i = 1:1:length(data)
     cur_data = data(i, :);
@@ -20,5 +20,5 @@ for i = 1:1:length(data)
     single_data.timestamp = data(i, 1);
     single_data.pose = [rot, cur_data(2:4).'; zeros(1, 3), 1];
 
-    traj_data = [traj_data; single_data];
+    data_T = [data_T; single_data];
 end

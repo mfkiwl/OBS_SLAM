@@ -32,15 +32,17 @@ for i = 1:1:nfeats
     v_dist = randi([1 h],1);
 
     uv_norm = undistort([u_dist, v_dist]);
-    depth = randi([sim.min_depth sim.max_depth],1);
 
-    bearing = [uv_norm(1), uv_norm(2), 1];
+    depth = sim.min_depth + (sim.max_depth-sim.min_depth)*rand(1);
+
+    bearing = [uv_norm(1); uv_norm(2); 1];
     p_FinC = depth * bearing;
 
     p_FinI = R_ItoC.' * (p_FinC - p_IinC);
     p_FinG = R_GtoI.' * p_FinI + p_IinG;
     
-    featmap(end + 1) = struct('id_map', id_map, 'p_FinG', p_FinG);
+    featmap(id_map).id_map = id_map;
+    featmap(id_map).p_FinG = p_FinG;
 
     id_map = id_map + 1;
 end

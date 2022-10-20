@@ -17,14 +17,23 @@ function [pose0, t0, pose1, t1, found] = find_bounding_poses(data, timestamp)
 % Copyright (C) 2022 @Jie Xu, jxu150@ucr.edu
 % Copyright (C) 2022 @Wei Ren, ren@ece.ucr.edu
 % =========================================================================
-for i = 2:1:(length(data)-1)
+for i = 1:1:(length(data)-1)
     if (data(i).timestamp == timestamp)
-        t0 = data(i-1).timestamp;
-        t1 = data(i+1).timestamp;
-        pose0 = data(i-1).pose;
-        pose1 = data(i+1).pose;
-        found = true;
-        break;
+        if i ~= 1
+            t0 = data(i-1).timestamp;
+            t1 = data(i+1).timestamp;
+            pose0 = data(i-1).pose;
+            pose1 = data(i+1).pose;
+            found = true;
+            break;
+        else
+            t0 = data(i).timestamp;
+            t1 = data(i+1).timestamp;
+            pose0 = data(i).pose;
+            pose1 = data(i+1).pose;
+            found = true;
+            break;
+        end
 
     elseif (data(i).timestamp < timestamp) && (data(i+1).timestamp > timestamp)
         t0 = data(i).timestamp;
