@@ -4,7 +4,6 @@ function pt_out = distort(uv_norm)
 % -------------------------------------------------------------------------
 % Inputs :
 % uv_norm: undistort uv
-%   cam  : camera parameters
 % Outputs:
 % pt_out : distorted point
 % -------------------------------------------------------------------------
