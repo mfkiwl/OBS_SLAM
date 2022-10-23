@@ -40,6 +40,6 @@ if (q(4) < 0)
     q = -q;
 end
   
-q = q / (norm(q));
+q = q / norm(q);
 
 end

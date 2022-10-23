@@ -19,3 +19,5 @@ else
     J_left = sin(theta) / theta * eye(3) + (1 - sin(theta) / theta) ...
         * a * a.' + ((1 - cos(theta)) / theta) * skew_x(a);
 end
+
+end

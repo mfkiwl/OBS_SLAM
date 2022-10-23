@@ -25,11 +25,11 @@ tr = trace(R);
 
 if (tr + 1.0 < 1e-10)
     if (abs(R33 + 1.0) > 1e-5)
-        omega = (pi / sqrt(2.0 + 2.0 * R33)) * [R13; R23; 1.0 + R33];
+        omega = (pi / sqrt(2.0 + 2.0 * R33)) * [R13; R23; (1.0 + R33)];
     elseif (abs(R22 + 1.0) > 1e-5)
-        omega = (pi / sqrt(2.0 + 2.0 * R22)) * [R12; 1.0 + R22; R32];
+        omega = (pi / sqrt(2.0 + 2.0 * R22)) * [R12; (1.0 + R22); R32];
     else
-        omega = (pi / sqrt(2.0 + 2.0 * R11)) * [1.0 + R11; R21; R31];
+        omega = (pi / sqrt(2.0 + 2.0 * R11)) * [(1.0 + R11); R21; R31];
     end
 else
     tr_3 = tr - 3.0;
@@ -39,7 +39,7 @@ else
     else
         magnitude = 0.5 - tr_3 / 12.0;
     end
-    omega = magnitude * [R32 - R23; R13 - R31; R21 - R12];
+    omega = magnitude * [(R32 - R23); (R13 - R31); (R21 - R12)];
 end
 
 end

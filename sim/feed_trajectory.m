@@ -54,6 +54,7 @@ while true
 
     control_points = [control_points; new_pt];
     timestamp_curr = timestamp_curr + dt;
+
 end
 
 timestamp_start = timestamp_min + 2 * dt;

@@ -15,10 +15,10 @@ data_T = [];
 data = double(readmatrix(path));
 for i = 1:1:length(data)
     cur_data = data(i, :);
-    rot = quat2rot(cur_data(5:8).');
+    R_ItoG = quat2rot(cur_data(5:8).');
 
     single_data.timestamp = data(i, 1);
-    single_data.pose = [rot, cur_data(2:4).'; zeros(1, 3), 1];
+    single_data.pose = [R_ItoG, cur_data(2:4).'; zeros(1, 3), 1];
 
     data_T = [data_T; single_data];
 end

@@ -17,40 +17,58 @@ function [pose0, t0, pose1, t1, found] = find_bounding_poses(data, timestamp)
 % Copyright (C) 2022 @Jie Xu, jxu150@ucr.edu
 % Copyright (C) 2022 @Wei Ren, ren@ece.ucr.edu
 % =========================================================================
-for i = 1:1:(length(data)-1)
-    if (data(i).timestamp == timestamp)
-        if i ~= 1
-            t0 = data(i-1).timestamp;
-            t1 = data(i+1).timestamp;
-            pose0 = data(i-1).pose;
-            pose1 = data(i+1).pose;
-            found = true;
-            break;
-        else
-            t0 = data(i).timestamp;
-            t1 = data(i+1).timestamp;
-            pose0 = data(i).pose;
-            pose1 = data(i+1).pose;
-            found = true;
-            break;
-        end
+t0 = -1;
+t1 = -1;
+pose0 = eye(4);
+pose1 = eye(4);
 
-    elseif (data(i).timestamp < timestamp) && (data(i+1).timestamp > timestamp)
-        t0 = data(i).timestamp;
-        t1 = data(i+1).timestamp;
-        pose0 = data(i).pose;
-        pose1 = data(i+1).pose;
-        assert((t0 < t1),'find_bounding_poses: t0 < t1?');
-        found = true;
-        break
+found_older = false;
+found_newer = false;
 
-    else
-        t0 = -1;
-        t1 = -1;
-        pose0 = eye(4);
-        pose1 = eye(4);
-        found = false;
+for i = 1:1:length(data)
+    if (data(i).timestamp >= timestamp) 
+%         && (data(i-1).timestamp < timestamp)
+          lower_bound = i;
+          break;
     end
 end
+
+for j = 1:1:length(data)
+    if (data(j).timestamp > timestamp) 
+%         && (data(j-1).timestamp <= timestamp)
+          upper_bound = j;
+          break;
+    end
+end
+
+if (lower_bound ~= length(data)) 
+    if (data(lower_bound).timestamp == timestamp)
+        found_older = true;
+    elseif (lower_bound ~= 2)
+        lower_bound = lower_bound - 1;
+        found_older = true;
+    end
+end
+
+if (upper_bound ~= length(data))
+    found_newer = true;
+end
+
+if (found_older)
+    t0 = data(lower_bound).timestamp;
+    pose0 = data(lower_bound).pose;
+end
+
+
+if (found_newer)
+    t1 = data(upper_bound).timestamp;
+    pose1 = data(upper_bound).pose;
+end
+
+if (found_older && found_newer)
+    assert(t0 < t1, "t0 is not smaller than t1");
+end
+
+found = (found_older && found_newer);
 
 end

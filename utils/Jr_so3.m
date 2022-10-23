@@ -12,3 +12,4 @@ function J_right = Jr_so3(w)
 % Copyright (C) 2022 @Wei Ren, ren@ece.ucr.edu
 % =========================================================================
 J_right = Jl_so3(-w);
+end

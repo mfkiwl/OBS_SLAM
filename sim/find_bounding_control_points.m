@@ -22,28 +22,62 @@ function [pose0, t0, pose1, t1, pose2, t2, pose3, t3, found] = find_bounding_con
 % Copyright (C) 2022 @Wei Ren, ren@ece.ucr.edu
 % =========================================================================
 t0 = -1;
+t1 = -1;
+t2 = -1;
 t3 = -1;
 pose0 = eye(4);
+pose1 = eye(4);
+pose2 = eye(4);
 pose3 = eye(4);
-found = false;
 
 [pose1, t1, pose2, t2, succ] = find_bounding_poses(poses, timestamp);
 
-if succ && (t1 ~= poses(1).timestamp) && (t2 ~= poses(end).timestamp)
-    all_t = [poses.timestamp];
-    tf1 = all_t == t1;
-    tf2 = all_t == t2;
-    index1 = find(tf1);
-    index2 = find(tf2);
-    t0 = poses(index1 - 1).timestamp;
-    pose0 = poses(index1 - 1).pose;
-    t3 = poses(index2 + 1).timestamp;
-    pose3 = poses(index2 + 1).pose;
+if ~succ
+    found = false;
+    return
 end
 
-if (t0 < t1) && (t1 < t2) && (t2 < t3)
-    found = true;
+for i = 1:1:length(poses)
+    if (t1 == poses(i).timestamp)
+        iter_t1 = i;
+        break;
+    end
 end
+
+for j = 1:1:length(poses)
+    if (t2 == poses(j).timestamp)
+        iter_t2 = j;
+        break;
+    end
+end
+
+if (iter_t1 == 1) 
+    found = false;
+    return
+end
+
+iter_t0 = iter_t1 - 1;
+iter_t3 = iter_t2 + 1;
+
+if (iter_t3 == length(poses)) 
+    found = false;
+    return
+end
+
+t0 = poses(iter_t0).timestamp;
+pose0 = poses(iter_t0).pose;
+
+t3 = poses(iter_t3).timestamp;
+pose3 = poses(iter_t3).pose;
+
+if (succ) 
+    assert(t0 < t1);
+    assert(t1 < t2);
+    assert(t2 < t3);
+end
+
+found = true;
+return
 
 end
 

@@ -12,5 +12,5 @@ function w = vee(w_x)
 % Copyright (C) 2022 @Jie Xu, jxu150@ucr.edu
 % Copyright (C) 2022 @Wei Ren, ren@ece.ucr.edu
 % =========================================================================
-w = [w_x(3, 2), w_x(1, 3), w_x(2, 1)];
+w = [w_x(3, 2); w_x(1, 3); w_x(2, 1)];
 end
