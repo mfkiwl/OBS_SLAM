@@ -17,13 +17,13 @@ function featmap = generatePoints(featmap_c, p_IinG, R_GtoI, nfeats)
 cam = cam_config();
 sim = sim_config();
 
-R_ItoC = cam.T_CtoI(1:3,1:3).';
-p_IinC = -R_ItoC * cam.T_CtoI(1:3,4);
+R_CtoI = cam.T_CtoI(1:3,1:3);
+p_IinC = -R_CtoI.' * cam.T_CtoI(1:3,4);
 w = cam.resolution(1);
 h = cam.resolution(2);
 
 featmap = featmap_c;
-id_map = length(featmap_c) + 1;
+id_map = length(featmap_c);
 
 % Generate the desired number of features
 for i = 1:1:nfeats
@@ -32,20 +32,18 @@ for i = 1:1:nfeats
     v_dist = randi([1 h],1);
 
     uv_norm = undistort([u_dist, v_dist]);
-%     uv_norm=[(u_dist-cam.intrinsics(3))/cam.intrinsics(1), (v_dist-cam.intrinsics(4))/cam.intrinsics(2)];
 
     depth = sim.min_depth + (sim.max_depth-sim.min_depth)*rand(1);
-
+    
     bearing = [uv_norm(1); uv_norm(2); 1];
     p_FinC = depth * bearing;
 
-    p_FinI = R_ItoC.' * (p_FinC - p_IinC);
+    p_FinI = R_CtoI * (p_FinC - p_IinC);
     p_FinG = R_GtoI.' * p_FinI + p_IinG;
     
-    featmap(id_map,1).id_map = id_map;
-    featmap(id_map,1).p_FinG = p_FinG;
+    featmap(id_map + i).id_map = id_map + i;
+    featmap(id_map + i).p_FinG = p_FinG;
 
-    id_map = id_map + 1;
 end
 
 end

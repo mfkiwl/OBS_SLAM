@@ -9,7 +9,9 @@ function sim = sim_config()
 % Copyright (C) 2022 @Jie Xu, jxu150@ucr.edu
 % Copyright (C) 2022 @Wei Ren, ren@ece.ucr.edu
 % =========================================================================
-sim.num_pts = 10;
+sim.dt = 0.25;
+
+sim.num_pts = 50;
 
 sim.distance_threshold = 1.2;
 

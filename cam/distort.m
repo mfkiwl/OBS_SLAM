@@ -12,7 +12,7 @@ function pt_out = distort(uv_norm)
 % Copyright (C) 2022 @Wei Ren, ren@ece.ucr.edu
 % =========================================================================
 cam = cam_config();
-cam_d = [cam.intrinsics(1:4); cam.distortion_coeffs];
+cam_d = [cam.intrinsics(1:4), cam.distortion_coeffs];
 
 r = sqrt(uv_norm(1) * uv_norm(1) + uv_norm(2) * uv_norm(2));
 r_2 = r * r;
