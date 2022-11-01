@@ -21,11 +21,6 @@ cy = cam.intrinsics(4);
 % camK = [fx, 0, cx; 0, fy, cy; 0, 0, 1].';
 camD = cam.distortion_coeffs;
 
-% params = cameraParameters("IntrinsicMatrix", camK, "RadialDistortion", camD(1:2), ...
-%                           "TangentialDistortion", camD(3:4));
-% 
-% pt_out = undistortPoints(uv_dist, params);
-
 u = uv_dist(1);
 v = uv_dist(2);
 

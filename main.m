@@ -9,9 +9,10 @@ clear all;
 close all;
 clc;
 
+% load trajectory
 [data_T, data] = load_simulated_trajectory('udel_gore.txt');
 
-featmap = simulator(data_T);
+[featmap, uvs] = simulator(data_T);
 
 %% Plot trajectory, trajectory interpolate, and 3D features
 for i = 1:1:length(featmap)

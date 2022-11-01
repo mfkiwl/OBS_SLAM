@@ -41,8 +41,8 @@ for i = 1:1:nfeats
     p_FinI = R_CtoI * (p_FinC - p_IinC);
     p_FinG = R_GtoI.' * p_FinI + p_IinG;
     
-    featmap(id_map + i).id_map = id_map + i;
-    featmap(id_map + i).p_FinG = p_FinG;
+    featmap(id_map + i, 1).id_map = id_map + i;
+    featmap(id_map + i, 1).p_FinG = p_FinG;
 
 end
 

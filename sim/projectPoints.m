@@ -1,4 +1,4 @@
-function uvs = projectPoints(feats, p_IinG, R_GtoI)
+function uvs = projectPoints(feats, p_IinG, R_GtoI, timestamp)
 % =========================================================================
 % This function is meant to project 3D points into current frame and
 % generate <u, v> measurements
@@ -7,6 +7,7 @@ function uvs = projectPoints(feats, p_IinG, R_GtoI)
 %  feats : current feature map
 %  p_IinG: 3 x 1 position of IMU in global frame
 %  R_GtoI: 3 x 3 rotational matrix of global frame in IMU
+% timestamp: current timestamp
 % Outputs:
 %   uvs  : a list of measurements
 % -------------------------------------------------------------------------
@@ -39,8 +40,11 @@ if ~isempty(feats)
             continue;
         end
     
-        uvs(end + 1).id = feats(i).id_map;
-        uvs(end + 1).uv = uv_dist;
+        uvs(end + 1, 1).id = feats(i).id_map;
+        uvs(end, 1).uv = uv_dist; % end = end + 1 here
+        uvs(end, 1).timestamp = timestamp;
+        uvs(end, 1).p_IinG = p_IinG;
+        uvs(end, 1).R_GtoI = R_GtoI;
     end
 end
 

@@ -1,4 +1,4 @@
-function [state_n, cov_n] = propagator(state_c, cov_c, imu_begin, imu_end, sigma)
+function [state_n, cov_n] = propagator(state_c, cov_c, imu_begin, imu_end)
 % =========================================================================
 % This function is meant to propagate IMU from begin to end
 % -------------------------------------------------------------------------
@@ -9,7 +9,6 @@ function [state_n, cov_n] = propagator(state_c, cov_c, imu_begin, imu_end, sigma
 % imu.timestamp
 % imu_end: imu measurement with structure imu.am, imu.wm, and 
 % imu.timestamp
-%  sigma : [sigma_g, sigma_a, sigma_gb, sigma_ab].'
 % Outputs:
 % state_n: next state vector
 %  cov_n : next covariance matrix
@@ -19,6 +18,9 @@ function [state_n, cov_n] = propagator(state_c, cov_c, imu_begin, imu_end, sigma
 % Copyright (C) 2022 @Jie Xu, jxu150@ucr.edu
 % Copyright (C) 2022 @Wei Ren, ren@ece.ucr.edu
 % =========================================================================
+sim = sim_config();
+sigma = [sim.sigma_g, sim.sigma_a, sim.sigma_gb, sim.sigma_ab].';
+
 dt = imu_end.timestamp - imu_begin.timestamp;
 
 R_GtoI = quat2rot(state_c(1:4));

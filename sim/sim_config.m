@@ -11,15 +11,15 @@ function sim = sim_config()
 % =========================================================================
 sim.dt = 0.25;
 
-sim.num_pts = 50;
+sim.num_pts = 20;
 
 sim.distance_threshold = 1.2;
 
 % Frequency (Hz) that we will simulate our cameras
-sim.freq_cam = 10.0;
+sim.freq_cam = 5.0;
 
 % Frequency (Hz) that we will simulate our inertial measurement unit
-sim.freq_imu = 400.0;
+sim.freq_imu = 20.0;
 
 % Feature distance we generate features from (minimum)
 sim.min_depth = 5;
@@ -40,5 +40,11 @@ sim.sigma_a = 2.0000e-3;
 
 % Accelerometer random walk (m/s^3/sqrt(hz))
 sim.sigma_ab = 3.0000e-03;
+
+sim.true_bias_gyro = zeros(3, 1);
+sim.true_bias_accel = zeros(3, 1);
+
+sim.sigma_pix = 1;
+
 
 end
